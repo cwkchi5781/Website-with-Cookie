@@ -1,3 +1,10 @@
+if ($.cookie('bgcolor') != undefined) {
+    $("body").css('background-color', $.cookie('bgcolor'));
+    $("#game").css('background-color', $.cookie('gmcolor'));
+    $("#obj")[0].src = $.cookie('imsrc')
+    $("body").css('color', $.cookie('fncolor'));
+}
+
 var width = $("#game").width();
 var height = $("#game").height();
 
@@ -15,3 +22,14 @@ setInterval(() => {
       left: newLeft
   });
 }, 1000);
+
+$("#obj").click(() => {
+  var dat = new XMLHttpRequest();
+  dat.open("POST", "/score");
+  dat.onreadystatechange = function(){
+    if (dat.readyState == 4){
+      $("#Score").html("Score: " + dat.response);
+    }
+  }
+  dat.send();
+})
